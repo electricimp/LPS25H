@@ -121,8 +121,8 @@ This method configures the interrupt pin driver, threshold, and sources.
 
 | Constant | Description | Notes |
 | -------- | ----------- | ----- |
-| INT_ACTIVELOW | Interrupt pin active-high | Interrupt pin is active-high by default|
-| INT_OPENDRAIN | Interrupt pin driver push-pull | Interrupt pin driver push-pull by default |
+| INT_ACTIVELOW | Interrupt pin active-low | Interrupt pin is active-high by default|
+| INT_OPENDRAIN | Interrupt pin driver open-drain | Interrupt pin driver push-pull by default |
 | INT_LATCH | Interrupts latched | Clear latched interrupts by calling getInterruptSrc() |
 | INT_LOW_PRESSURE | Interrupt on pressure below threshold | |
 | INT_HIGH_PRESSURE | Interrupt on pressure above threshold | |
@@ -134,7 +134,7 @@ pressureSensor.configureInterrupt(true, 10, LPS25H.INT_LATCH | LPS25H.INT_HIGH_P
 
 ```squirrel
 // Enable interrupt, configure as open-drain, active-low, latched. Fire interrupt if (absolute pressure - reference pressure) < -20 hPa
-pressureSensor.configureInterrupt(ture, 20, LPS25H.INT_ACTIVELOW | LPS25H.INT_OPENDRAIN | LPS25H.INT_LATCH | LPS25H.INT_LOW_PRESSURE);
+pressureSensor.configureInterrupt(true, 20, LPS25H.INT_ACTIVELOW | LPS25H.INT_OPENDRAIN | LPS25H.INT_LATCH | LPS25H.INT_LOW_PRESSURE);
 ```
 
 ### getInterruptSrc() 
