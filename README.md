@@ -111,6 +111,24 @@ Get the reference pressure for differential pressure measurements and interrupts
 server.log("Internal Reference Pressure Offset = " + pressure.getReferencePressure());
 ```
 
+###setDataRate(dataRate)
+
+Sets the output data rate (ODR) of the pressure sensor in Hz. The nearest supported data rate less than or equal to the requested rate will be used and returned. Supported datarates are 0 (one shot configuration), 1, 7, 12.5, and 25 Hz. The default value is 0Hz.
+
+```squirrel
+local dataRate = pressureSensor.setDataRate(7);
+server.log(dataRate);
+```
+
+###getDataRate()
+
+Returns the output data rate (ODR) of the pressure sensor in Hz.
+
+```squirrel
+local dataRate = pressureSensor.getDataRate();
+server.log(dataRate);
+```
+
 ### configureInterrupt(*enable*, [*threshold*, *options*])
 
 This method configures the interrupt pin driver, threshold, and sources.
@@ -137,7 +155,7 @@ pressureSensor.configureInterrupt(true, 10, LPS25H.INT_LATCH | LPS25H.INT_HIGH_P
 pressureSensor.configureInterrupt(true, 20, LPS25H.INT_ACTIVELOW | LPS25H.INT_OPENDRAIN | LPS25H.INT_LATCH | LPS25H.INT_LOW_PRESSURE);
 ```
 
-### getInterruptSrc() 
+### getInterruptSrc()
 
 Determine what caused an interrupt, and clear latched interrupt. This method returns a table with three keys to provide information about which interrupts are active.
 
@@ -154,7 +172,7 @@ if (intSrc.int_active) {
   // interrupt is active
   if (intSrc.high_pressure) {
     server.log("High Pressure Interrupt Occurred!");
-  } 
+  }
   if (intSrc.low_pressure) {
     server.log("Low Pressure Interrupt Occurred!");
   }
@@ -177,7 +195,7 @@ pressureSensor.setPressNpts(128);
 
 // Rounding and checking result
 local actualNpts = pressureSensor.setPressNpts(30);
-server.log("Actual Pressure Npts = "+actualNpts); 
+server.log("Actual Pressure Npts = "+actualNpts);
 // prints "Actual Pressure Npts = 32"
 ```
 
@@ -201,6 +219,10 @@ Reset the LPS25H from software. Device will come up disabled.
 ```squirrel
 pressureSensor.softReset();
 ```
+
+### getDeviceID()
+
+Returns the value of the device ID register, BDh.
 
 ## License
 
