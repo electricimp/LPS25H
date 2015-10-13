@@ -111,9 +111,9 @@ Get the reference pressure for differential pressure measurements and interrupts
 server.log("Internal Reference Pressure Offset = " + pressure.getReferencePressure());
 ```
 
-###setDataRate(dataRate)
+###setDataRate(*dataRate*)
 
-Sets the output data rate (ODR) of the pressure sensor in Hz. The nearest supported data rate less than or equal to the requested rate will be used and returned. Supported datarates are 0 (one shot configuration), 1, 7, 12.5, and 25 Hz. The default value is 0Hz.
+Sets the output data rate (ODR) of the pressure sensor in Hz. The nearest supported data rate less than or equal to the requested rate will be used and returned. Supported datarates are 0 (one shot configuration), 1, 7, 12.5, and 25 Hz. The default value is 0 Hz.
 
 ```squirrel
 local dataRate = pressureSensor.setDataRate(7);
