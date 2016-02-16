@@ -57,12 +57,13 @@ Enable (*state* = true) or disable (*state* = false) the LPS25H. The device must
 pressureSensor.enable(true);    // Enable the sensor
 ```
 
-### read(*callback*)
+### read([*callback*])
 
-The **read()** method reads the pressure in hPa and executes the callback passed as its only parameter with the result. The callback takes a single parameter, a table. If an error occurs during the reading, the table passed to the callback will contain a key "err", with a description of the error, and the pressure reading will be null. If the pressure is read successfully, it will be stored in the table with the key "pressure".
+The **read()** method returns a pressure reading in hPa.  The reading result is in the form of a squirrel table with the field *pressure*.  If an error occurs during the reading the pressure field will be null, and the reading table will contain an additional field *err*, with a description of the error.
 
-If the callback is omitted, **read** executes synchronously and returns a table. As with the asynchrounous flow, the "err" key is present in the table if an error occurs. The pressure is stored with the "pressure" key.
+If a callback parameter is provided the reading executes asynchrounously, and the results table will be passed to the supplied function as the only parameter. If not, the reading executes synchronously, and the results table will be returned.
 
+#####asynchrounous example:
 ```squirrel
 pressureSensor.read(function(result) {
   if ("err" in result) {
@@ -72,7 +73,7 @@ pressureSensor.read(function(result) {
   }
 });
 ```
-
+#####synchrounous example:
 ```squirrel
 function hpaToHg(hpa) {
   return (1.0 * hpa) / 33.8638866667;
