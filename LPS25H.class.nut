@@ -258,7 +258,7 @@ class LPS25H {
     function setReferencePressure(val) {
         val = (val * REFERENCE_PRESSURE_SCALE).tointeger();
         if (val < 0) { val = _twosComp(val, 0x7FFF); }
-        server.log(format("ref: 0x%04X", val));
+        // server.log(format("ref: 0x%04X", val));
         _writeReg(RPDS_H, (val & 0xFF00) >> 8);
         _writeReg(RPDS_L, (val & 0xFF));
     }
