@@ -282,7 +282,7 @@ class LPS25H {
             // Get pressure in HPa
             if (cb == null) {
                 local pressure = _getPressure() + getReferencePressure();
-                return {"pressure_": pressure};
+                return {"pressure": pressure};
             } else {
                 imp.wakeup(meas_time, function() {
                     local pressure = _getPressure() + getReferencePressure();
