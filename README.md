@@ -51,7 +51,7 @@ After a reset, the LPS25H will be disabled. Call *enable* to use the device.
 
 ### enable(*state*)
 
-Enable (*state* = true) or disable (*state* = false) the LPS25H. The device must be enabled before attempting to read the pressure or temperature.
+Enable (*state* = true) or disable (*state* = false) the LPS25H. The device must be enabled before attempting to read the pressure or temperature.  If the device is disabled and a reading is taken it will return stale data.
 
 ```squirrel
 pressureSensor.enable(true);    // Enable the sensor
@@ -183,20 +183,19 @@ if (intSrc.int_active) {
 
 ### setPressNpts(*numberOfReadings*)
 
-Set the number of readings taken and then internally averaged to produce a pressure result. The value provided will be rounded up to the nearest valid value: 8, 32 and 128. The actual value used is returned.
+Set the number of readings taken and then internally averaged to produce a pressure result. The value provided will be rounded up to the nearest valid value: 8, 32 ,128 or 512. The actual value used is returned.
 
 ```squirrel
 // Fastest readings, lowest precision
 pressureSensor.setPressNpts(8);
 
 // Slowest readings, highest precision
-pressure
-pressureSensor.setPressNpts(128);
+pressureSensor.setPressNpts(512);
 
 // Rounding and checking result
 local actualNpts = pressureSensor.setPressNpts(30);
-server.log("Actual Pressure Npts = "+actualNpts);
 // prints "Actual Pressure Npts = 32"
+server.log("Actual Pressure Npts = " + actualNpts);
 ```
 
 ### setTempNpts(*numberOfReadings*)
