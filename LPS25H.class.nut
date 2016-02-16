@@ -165,7 +165,7 @@ class LPS25H {
             actualNpts = 64;
             npts = 0x03;
         }
-        local val = _readReg(RES_CONF, 1);
+        local val = _readReg(RES_CONF, 1)[0];
         local res = _writeReg(RES_CONF, (val & 0xF3) | (npts << 2));
         return actualNpts;
     }
