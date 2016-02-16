@@ -131,19 +131,25 @@ server.log(dataRate);
 
 ### configureInterrupt(*enable*, [*threshold*, *options*])
 
-This method configures the interrupt pin driver, threshold, and sources.
+This method configures the interrupt pin driver, threshold, and sources.  The device starts with this disabled by default.
 
-- *enable* is a required boolean parameter. Set true to enable the interrupt pin.
-- *threshold* is an optional parameter, to set the interrupt threshold pressure. Interrupts are generated on differential pressure events; a high differential pressure interrupt occurs if (Absolute Pressure - Reference Pressure) > Threshold, a low differential pressure interrupt occurs if (Absolute Pressure - Reference Pressure) < (-1.0 * Threshold). The threshold is expressed in hectopascals (hPa).
-- *options* is an optional bitfield which allows the pin driver and interrupt condition to be configured by OR'ing together the appropriate flags:
+####Parameters
 
-| Constant | Description | Notes |
-| -------- | ----------- | ----- |
-| INT_ACTIVELOW | Interrupt pin active-low | Interrupt pin is active-high by default|
-| INT_OPENDRAIN | Interrupt pin driver open-drain | Interrupt pin driver push-pull by default |
-| INT_LATCH | Interrupts latched | Clear latched interrupts by calling getInterruptSrc() |
-| INT_LOW_PRESSURE | Interrupt on pressure below threshold | |
-| INT_HIGH_PRESSURE | Interrupt on pressure above threshold | |
+| Parameter | Type | Default | Description |
+| -------------- | ------ | ---------- | --------------- |
+| *enable* | boolean | N/A | Set true to enable the interrupt pin. |
+| *threshold* | Inteter | null | Interrupts are generated on differential pressure events; a high differential pressure interrupt occurs if (Absolute Pressure - Reference Pressure) > Threshold, a low differential pressure interrupt occurs if (Absolute Pressure - Reference Pressure) < (-1.0 * Threshold). The threshold is expressed in hectopascals (hPa). |
+| *options* | Byte | 0x00 | Configuration options combined with the bitwise OR operator. See the ‘Options’ table below. |
+
+####Options
+
+| Option Constant | Description |
+| -------- | ----------- |
+| INT_ACTIVELOW | Interrupt pin is active-high by default. Use to set interrupt to active-low. |
+| INT_OPENDRAIN | Interrupt pin driver push-pull by default. Use to set interrupt to open-drain. |
+| INT_LATCH | Interrupt latching mode is disabled by default.  Use to enable interrupt latching mode.  To clear a latched interrupt pin call getInterruptSrc() |
+| INT_LOW_PRESSURE | Interrupt is disabled by default.  Use to enable interrupt when pressure below threshold |
+| INT_HIGH_PRESSURE | Interrupt is disabled by default.  Use to enable interrupt when pressure above threshold |
 
 ```squirrel
 // Enable interrupt, configure as push-pull, active-high, latched. Fire interrupt if (absolute pressure - reference pressure) > 10 hPa
