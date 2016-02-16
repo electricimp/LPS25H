@@ -7,7 +7,7 @@
 
 class LPS25H {
 
-    static version = [2,0,0];
+    static version = [2,0,1];
 
     static MAX_MEAS_TIME_SECONDS = 0.5; // seconds; time to complete one-shot pressure conversion
 
@@ -39,7 +39,7 @@ class LPS25H {
     static REFERENCE_PRESSURE_SCALE = 16.0;
     static MAX_REFERENCE_PRESSURE = 65534;
 
-    // interrupt bitfield 
+    // interrupt bitfield
     static INT_HIGH_PRESSURE_ACTIVE = 0x01;
     static INT_LOW_PRESSURE_ACTIVE  = 0x02;
     static INT_ACTIVE               = 0x04;
@@ -101,7 +101,7 @@ class LPS25H {
         _writeReg(CTRL_REG1, (val | (datarate << 4)));
         return actualRate;
     }
-    
+
     // -------------------------------------------------------------------------
     function getDataRate() {
         local val = (_readReg(CTRL_REG1, 1)[0] & 0x70) >> 4;
@@ -172,7 +172,7 @@ class LPS25H {
 
     // ------------------------------------ena-------------------------------------
     function configureInterrupt(enable, threshold = null, options = 0) {
-        
+
         // Datasheet recommends setting threshold before enabling/disabling int gen
         // set the threshold, if it was given ---------------------------------
         if (threshold != null) {
@@ -180,7 +180,7 @@ class LPS25H {
             _writeReg(THS_P_H, (threshold & 0xFF00) >> 8);
             _writeReg(THS_P_L, threshold & 0xFF);
         }
-        
+
         // check and set the options ------------------------------------------
 
         // interrupt pin active-high (active-low by default)
@@ -218,8 +218,8 @@ class LPS25H {
             val = val | 0x01;
         }
         _writeReg(INT_CFG, val & 0xFF);
-        
-                
+
+
         // set the enable -----------------------------------------------------
         val = _readReg(CTRL_REG1, 1)[0];
         if (enable) {
@@ -253,7 +253,7 @@ class LPS25H {
         if (val & 0x8000) { val = _twosComp(val, 0x7FFF); }
         return (val * 1.0) / REFERENCE_PRESSURE_SCALE;
     }
-    
+
     // -------------------------------------------------------------------------
     function setReferencePressure(val) {
         val = (val * REFERENCE_PRESSURE_SCALE).tointeger();
@@ -278,7 +278,7 @@ class LPS25H {
             } else {
                 meas_time = 1.0 / datarate;
             }
-            
+
             // Get pressure in HPa
             if (cb == null) {
                 local pressure = _getPressure() + getReferencePressure();
